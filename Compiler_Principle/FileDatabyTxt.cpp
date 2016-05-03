@@ -19,8 +19,8 @@ void CFileDatabyTxt::FileOpen(const string& m_txtName)
 
 void CFileDatabyTxt::FileFormat()
 {
-	//m_file.setf(ios::left, ios::adjustfield);
-	//m_file.width(10);
+	m_file.setf(ios::left, ios::adjustfield);
+	m_file.width(10);
 }
 
 void CFileDatabyTxt::FileWrite(const string &fileData)
