@@ -93,5 +93,4 @@ D                   !=        D                             epsilon
 D                   +         D                             epsilon 
 D                   -         D                             epsilon 
 D                   *         D                             * factor D 
-D                   /         D                             / factor D 
 D                   ;         D                             epsilon 

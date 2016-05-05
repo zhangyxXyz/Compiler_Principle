@@ -227,7 +227,7 @@ void CLL_1_Table::Init()
 	vec.clear();
 
 	vec = { "/","factor","D" };
-	ADD_Tablelayer("D", "/", vec);
+	ADD_Tablelayer("DDD", "/", vec);
 	vec.clear();
 	OutTable();
 }
@@ -235,10 +235,21 @@ void CLL_1_Table::Init()
 
 void CLL_1_Table::ADD_Tablelayer(const string& name, const string& symbol, const vector<string> &vec)
 {
-	int x = m_NoumMapSet.GetSynbolIDByName(name);
-	int y = m_NoumMapSet.GetIntSymbolIDByName(symbol);
-	m_Expr[x][y].left = name;
-	m_Expr[x][y].right = vec;
+	try
+	{
+		int x = m_NoumMapSet.GetSynbolIDByName(name);
+		int y = m_NoumMapSet.GetIntSymbolIDByName(symbol);
+		if (!~x || !~y)
+			throw runtime_error("ERROR:");
+		m_Expr[x][y].left = name;
+		m_Expr[x][y].right = vec;
+	}
+	catch (runtime_error err)
+	{
+		cout << err.what()
+			<< "无法建立在 '" << name << "' 状态下处理 '" << symbol << "' 对应的转换关系式\n";
+		return;
+	}
 	//cout << name << ' ' << symbol << ' '<< name << ' ' << vec[0] << endl;
 }
 

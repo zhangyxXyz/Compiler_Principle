@@ -82,6 +82,7 @@ int CNounMapSet::GetSynbolIDByName(const string& name)
 	{
 		cout << err.what()
 			<< "出现无法匹配的终结符号" << name << endl;
+		return -1;
 	}
 	return m_Symbol[name];
 }
@@ -121,6 +122,7 @@ int CNounMapSet::GetIntSymbolIDByName(const string& name)
 	{
 		cout << err.what()
 			<< "出现无法匹配的非终结符号"<<name<<endl;
+		return -1;
 	}
 	return m_intSymbol[name];
 }
