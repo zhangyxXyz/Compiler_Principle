@@ -11,7 +11,6 @@ CReceivingData::~CReceivingData()
 {
 }
 
-
 void CReceivingData::ProcessedData_ADD(const int& state_type, const string& name, const int& indexLine)
 {
 	string m_type = "";

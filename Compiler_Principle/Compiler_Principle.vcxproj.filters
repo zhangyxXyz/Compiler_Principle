@@ -63,6 +63,12 @@
     <ClInclude Include="ReceivingData.h">
       <Filter>头文件\语法分析</Filter>
     </ClInclude>
+    <ClInclude Include="NounMapSet.h">
+      <Filter>头文件\语法分析</Filter>
+    </ClInclude>
+    <ClInclude Include="LL_1_Table.h">
+      <Filter>头文件\语法分析</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -90,6 +96,12 @@
       <Filter>源文件\文件输出管理</Filter>
     </ClCompile>
     <ClCompile Include="ReceivingData.cpp">
+      <Filter>源文件\语法分析</Filter>
+    </ClCompile>
+    <ClCompile Include="NounMapSet.cpp">
+      <Filter>源文件\语法分析</Filter>
+    </ClCompile>
+    <ClCompile Include="LL_1_Table.cpp">
       <Filter>源文件\语法分析</Filter>
     </ClCompile>
   </ItemGroup>

@@ -23,6 +23,7 @@ void CEngine::Init()
 	m_StateManger.StateInit();
 	m_TransRelation.TranslateRelationInit(m_CharacterTable, m_StateManger);
 	m_infManager.Init();
+	m_LL1_Table.Init();
 }
 
 

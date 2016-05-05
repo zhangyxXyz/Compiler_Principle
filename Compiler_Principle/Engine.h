@@ -4,6 +4,7 @@
 #include "TranslateRelation.h"
 #include "InformationManager.h"
 #include "ReceivingData.h"
+#include "LL_1_Table.h"
 class CEngine
 {
 public:
@@ -18,6 +19,7 @@ private:
 	CTranslateRelation m_TransRelation;
 	CInformationManager m_infManager;
 	CReceivingData m_ReceivingData;
+	CLL_1_Table	m_LL1_Table;
 
 	int m_indexLine;									//当前处理第几行
 	int m_nowStateStartline;							//当前状态的处理起始行
