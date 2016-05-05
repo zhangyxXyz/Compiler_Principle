@@ -16,9 +16,9 @@ class CLL_1_Table
 public:
 	CLL_1_Table();
 	~CLL_1_Table();
-private:
 	CNounMapSet	m_NoumMapSet;
 	CExpr m_Expr[25][27];			//表达式邻接矩阵
+private:
 	CFileDatabyTxt m_file;
 public:
 	void Init();

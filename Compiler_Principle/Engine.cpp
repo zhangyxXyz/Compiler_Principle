@@ -23,7 +23,7 @@ void CEngine::Init()
 	m_StateManger.StateInit();
 	m_TransRelation.TranslateRelationInit(m_CharacterTable, m_StateManger);
 	m_infManager.Init();
-	m_LL1_Table.Init();
+	m_SySyntaxAnalysis.Init();
 }
 
 
@@ -67,7 +67,7 @@ void CEngine::DataConduct(const string& nowConductData)
 	m_indexLine++;															//记录当前行
 	m_pre_index = -1;														//当前状态机识别表示符开始位置的前一位
 	m_now_Data = m_rest_Data + nowConductData;
-	for (int i = m_rest_Data.length();i < m_now_Data.length();i++)			//循环处理当前的每一位
+	for (int i = m_rest_Data.length(), k = m_now_Data.length();i < k;i++)		//循环处理当前的每一位
 	{
 		m_pre_State = m_now_State;											//状态切换前吧当前状态赋值给前一个状态
 		if (NoteSpecialJudge(i) == false)									//状态切换，寻找下一个状态
