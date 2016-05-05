@@ -1,0 +1,97 @@
+program             {         program                       { declaration_list statement_list } 
+declaration_list    int       declaration_list              A 
+statement_list      if        statement_list                B 
+statement_list      while     statement_list                B 
+statement_list      for       statement_list                B 
+statement_list      write     statement_list                B 
+statement_list      read      statement_list                B 
+statement_list      ID        statement_list                B 
+statement_list      {         statement_list                B 
+statement_list      ;         statement_list                B 
+A                   int       A                             declaration_stat A 
+A                   if        A                             epsilon 
+A                   while     A                             epsilon 
+A                   for       A                             epsilon 
+A                   write     A                             epsilon 
+A                   read      A                             epsilon 
+A                   ID        A                             epsilon 
+A                   NUM       A                             epsilon 
+A                   {         A                             epsilon 
+A                   }         A                             epsilon 
+A                   ;         A                             epsilon 
+declaration_stat    int       declaration_stat              int ID 
+B                   if        B                             statement B 
+B                   while     B                             statement B 
+B                   for       B                             statement B 
+B                   write     B                             statement B 
+B                   read      B                             statement B 
+B                   ID        B                             statement B 
+B                   NUM       B                             statement B 
+B                   (         B                             statement B 
+B                   {         B                             statement B 
+B                   }         B                             epsilon 
+B                   ;         B                             statement B 
+statement           if        statement                     if_stat 
+statement           while     statement                     while_stat 
+statement           for       statement                     for_stat 
+statement           write     statement                     write_stat 
+statement           read      statement                     read_stat 
+statement           ID        statement                     expr_stat 
+statement           NUM       statement                     expr_stat 
+statement           (         statement                     expr_stat 
+statement           {         statement                     compound_stat 
+statement           ;         statement                     expr_stat 
+if_stat             if        if_stat                       if ( expr ) statement 
+while_stat          while     while_stat                    while ( expr ) statement 
+for_stat            for       for_stat                      for ( ; expr ; expr ; expr ) statement 
+read_stat           read      read_stat                     read ID 
+write_stat          write     write_stat                    write expr 
+compound_stat       {         compound_stat                 { statement_list } 
+expr_stat           ID        expr_stat                     expr ; 
+expr_stat           NUM       expr_stat                     expr ; 
+expr_stat           (         expr_stat                     expr ; 
+expr_stat           ;         expr_stat                     ; 
+expr                ID        expr                          ID = bool_expr 
+expr                NUM       expr                          bool_expr 
+expr                (         expr                          bool_expr 
+bool_expr           ID        bool_expr                     additive_expr E 
+bool_expr           NUM       bool_expr                     additive_expr E 
+bool_expr           (         bool_expr                     additive_expr E 
+additive_expr       ID        additive_expr                 term C 
+additive_expr       NUM       additive_expr                 term C 
+additive_expr       (         additive_expr                 term C 
+E                   >         E                             > < >= <= == != additive_expr 
+E                   <         E                             > < >= <= == != additive_expr 
+E                   >=        E                             > < >= <= == != additive_expr 
+E                   <=        E                             > < >= <= == != additive_expr 
+E                   ==        E                             > < >= <= == != additive_expr 
+E                   !=        E                             > < >= <= == != additive_expr 
+E                   ;         E                             epsilon 
+term                ID        term                          factor D 
+term                NUM       term                          factor D 
+term                (         term                          factor D 
+C                   )         C                             epsilon 
+C                   >         C                             epsilon 
+C                   <         C                             epsilon 
+C                   >=        C                             epsilon 
+C                   <=        C                             epsilon 
+C                   ==        C                             epsilon 
+C                   !=        C                             epsilon 
+C                   +         C                             + term D 
+C                   -         C                             - term D 
+C                   ;         C                             epsilon 
+factor              ID        factor                        ID 
+factor              NUM       factor                        NUM 
+factor              (         factor                        ( expr ) 
+D                   )         D                             epsilon 
+D                   >         D                             epsilon 
+D                   <         D                             epsilon 
+D                   >=        D                             epsilon 
+D                   <=        D                             epsilon 
+D                   ==        D                             epsilon 
+D                   !=        D                             epsilon 
+D                   +         D                             epsilon 
+D                   -         D                             epsilon 
+D                   *         D                             * factor D 
+D                   /         D                             / factor D 
+D                   ;         D                             epsilon 

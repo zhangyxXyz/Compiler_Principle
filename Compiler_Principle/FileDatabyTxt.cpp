@@ -17,10 +17,10 @@ void CFileDatabyTxt::FileOpen(const string& m_txtName)
 	m_file.open(m_txtName, ofstream::out);
 }
 
-void CFileDatabyTxt::FileFormat()
+void CFileDatabyTxt::FileFormat(const int& size_)
 {
 	m_file.setf(ios::left, ios::adjustfield);
-	m_file.width(10);
+	m_file.width(size_);
 }
 
 void CFileDatabyTxt::FileWrite(const string &fileData)

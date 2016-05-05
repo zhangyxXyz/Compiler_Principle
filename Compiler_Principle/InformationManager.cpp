@@ -30,7 +30,7 @@ void CInformationManager::Init()
 	m_Note.clear();
 	m_WrongHint.clear();
 
-	m_filebyTxt.FileOpen("./lex.txt");
+	m_filebyTxt.FileOpen("./message/lex.txt");
 	m_filebyTxt.FileWrite("成功识别的内容如下:\n");
 }
 

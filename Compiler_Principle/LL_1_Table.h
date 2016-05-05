@@ -1,6 +1,6 @@
 #pragma once
 #include "NounMapSet.h"
-
+#include "FileDatabyTxt.h"
 //表达式信息
 class CExpr
 {
@@ -19,8 +19,9 @@ public:
 private:
 	CNounMapSet	m_NoumMapSet;
 	CExpr m_Expr[25][27];			//表达式邻接矩阵
+	CFileDatabyTxt m_file;
 public:
 	void Init();
-	void ADD_Tablelayer(const string& name, const string& symbol, vector<string> &vec);
+	void ADD_Tablelayer(const string& name, const string& symbol, const vector<string> &vec);
+	void OutTable();
 };
-

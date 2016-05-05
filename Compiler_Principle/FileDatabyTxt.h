@@ -5,7 +5,7 @@ public:
 	CFileDatabyTxt();
 	~CFileDatabyTxt();
 	void FileOpen(const string& m_txtName);
-	void FileFormat();
+	void FileFormat(const int& size_);
 	void FileWrite(const string &fileData);
 	void FileClose();
 private:

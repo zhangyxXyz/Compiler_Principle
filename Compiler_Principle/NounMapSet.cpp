@@ -30,7 +30,7 @@ void CNounMapSet::Init()
 	m_Symbol.insert(pair<string, int>("read_stat", ++cnt));
 	m_Symbol.insert(pair<string, int>("write_stat", ++cnt));
 	m_Symbol.insert(pair<string, int>("compound_stat", ++cnt));
-	m_Symbol.insert(pair<string, int>("expression_stat", ++cnt));
+	m_Symbol.insert(pair<string, int>("expr_stat", ++cnt));
 	m_Symbol.insert(pair<string, int>("expr", ++cnt));
 	m_Symbol.insert(pair<string, int>("bool_expr", ++cnt));
 	m_Symbol.insert(pair<string, int>("additive_expr", ++cnt));
@@ -65,23 +65,44 @@ void CNounMapSet::Init()
 	m_intSymbol.insert(pair<string, int>("/", ++cnt));
 	m_intSymbol.insert(pair<string, int>(";", ++cnt));
 	m_intSymbol.insert(pair<string, int>("#", ++cnt));
+	m_intSymbol.insert(pair<string, int>("epsilon", ++cnt));
 }
 
 
 int CNounMapSet::GetSynbolIDByName(const string& name)
 {
+	try
+	{
+		pair<map<string, int>::iterator, map<string, int>::iterator> m_Search;
+		m_Search = m_Symbol.equal_range(name);
+		if (m_Search.first == m_Search.second)
+			throw runtime_error("ERROR:通过名称寻找ID时:");
+	}
+	catch (runtime_error err)
+	{
+		cout << err.what()
+			<< "出现无法匹配的终结符号" << name << endl;
+	}
 	return m_Symbol[name];
-	//return 0;
 }
 
 
 string CNounMapSet::GetSymbolNameByID(const int& ID)
 {
 	//由于对应类型的操作没有重载，考虑到数据较小，使用范围for语句遍历输出
-	for (auto iter : m_Symbol)
+	try
 	{
-		if (iter.second == ID)
-			return iter.first;
+		for (auto iter : m_Symbol)
+		{
+			if (iter.second == ID)
+				return iter.first;
+		}
+		throw runtime_error("ERROR:通过ID查找名称时:");
+	}
+	catch(runtime_error err)
+	{
+		cout << err.what()
+			<< "出现无法匹配的非终结符号\n";
 	}
 	return string();
 }
@@ -89,17 +110,37 @@ string CNounMapSet::GetSymbolNameByID(const int& ID)
 
 int CNounMapSet::GetIntSymbolIDByName(const string& name)
 {
+	try
+	{
+		pair<map<string, int>::iterator, map<string, int>::iterator> m_Search;
+		m_Search = m_intSymbol.equal_range(name);
+		if (m_Search.first == m_Search.second)
+			throw runtime_error("ERROR:通过名称寻找ID时:");
+	}
+	catch (runtime_error err)
+	{
+		cout << err.what()
+			<< "出现无法匹配的非终结符号"<<name<<endl;
+	}
 	return m_intSymbol[name];
-	//return 0;
 }
 
 
 string CNounMapSet::GetIntSymbolNameByID(const int& ID)
 {
-	for (auto iter : m_intSymbol)
+	try
 	{
-		if (iter.second == ID)
-			return iter.first;
+		for (auto iter : m_intSymbol)
+		{
+			if (iter.second == ID)
+				return iter.first;
+		}
+		throw runtime_error("ERROR:通过ID查找名称时:");
+	}
+	catch (runtime_error err)
+	{
+		cout << err.what()
+			<< "出现无法匹配的终结符号\n";
 	}
 	return string();
 }

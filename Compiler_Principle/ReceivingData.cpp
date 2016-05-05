@@ -32,15 +32,15 @@ void CReceivingData::ProcessedData_ADD(const int& state_type, const string& name
 
 void CReceivingData::ProcessedDataOut()
 {
-	m_file.FileOpen("test_.txt");
+	m_file.FileOpen("./message/test_.txt");
 	for (auto iter : m_ProcessedData)
 	{
 		stringstream s;
 		s << iter.m_indexLine;
-		m_file.FileFormat();
+		m_file.FileFormat(10);
 		//string str = iter.m_type + ' ' + iter.m_name + ' ' + s.str() + '\n';
 		m_file.FileWrite(iter.m_type+' ');
-		m_file.FileFormat();
+		m_file.FileFormat(10);
 		m_file.FileWrite(iter.m_name + ' ');
 		m_file.FileWrite(s.str() + '\n');
 	}
