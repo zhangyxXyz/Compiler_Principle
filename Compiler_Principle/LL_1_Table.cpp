@@ -21,59 +21,45 @@ void CLL_1_Table::Init()
 	ADD_Tablelayer("program", "{", vec);
 	vec.clear();
 	//line2
-	vec = { "A" };
+	vec = { "declaration_stat","declaration_list" };
 	ADD_Tablelayer("declaration_list", "int", vec);
 	vec.clear();
+
+	vec = { "epsilon" };
+	ADD_Tablelayer("declaration_list", "if", vec);
+	ADD_Tablelayer("declaration_list", "while", vec);
+	ADD_Tablelayer("declaration_list", "for", vec);
+	ADD_Tablelayer("declaration_list", "write", vec);
+	ADD_Tablelayer("declaration_list", "read", vec);
+	ADD_Tablelayer("declaration_list", "ID", vec);
+	ADD_Tablelayer("declaration_list", "NUM", vec);
+	ADD_Tablelayer("declaration_list", "{", vec);
+	ADD_Tablelayer("declaration_list", "}", vec);
+	ADD_Tablelayer("declaration_list", ";", vec);
+	vec.clear();
 	//line3
-	vec = { "B" };
+	vec = { "statement","statement_list" };
 	ADD_Tablelayer("statement_list", "if", vec);
 	ADD_Tablelayer("statement_list", "while", vec);
 	ADD_Tablelayer("statement_list", "for", vec);
 	ADD_Tablelayer("statement_list", "write", vec);
 	ADD_Tablelayer("statement_list", "read", vec);
 	ADD_Tablelayer("statement_list", "ID", vec);
+	ADD_Tablelayer("statement_list", "NUM", vec);
 	ADD_Tablelayer("statement_list", "{", vec);
 	ADD_Tablelayer("statement_list", ";", vec);
+	ADD_Tablelayer("statement_list", "(", vec);
+	vec.clear();
+
+	vec = { "epsilon" };
+	ADD_Tablelayer("statement_list", "}", vec);
 	vec.clear();
 	//line4
-	vec = { "declaration_stat","A" };
-	ADD_Tablelayer("A", "int", vec);
-	vec.clear();
-
-	vec = { "epsilon" };
-	ADD_Tablelayer("A", "if", vec);
-	ADD_Tablelayer("A", "while", vec);
-	ADD_Tablelayer("A", "for", vec);
-	ADD_Tablelayer("A", "write", vec);
-	ADD_Tablelayer("A", "read", vec);
-	ADD_Tablelayer("A", "ID", vec);
-	ADD_Tablelayer("A", "NUM", vec);
-	ADD_Tablelayer("A", "{", vec);
-	ADD_Tablelayer("A", "}", vec);
-	ADD_Tablelayer("A", ";", vec);
-	vec.clear();
-	//line5
-	vec = { "int","ID" };
+	vec = { "int","ID" ,";" };
 	ADD_Tablelayer("declaration_stat", "int", vec);
 	vec.clear();
-	//line6
-	vec = { "statement","B" };
-	ADD_Tablelayer("B", "if", vec);
-	ADD_Tablelayer("B", "while", vec);
-	ADD_Tablelayer("B", "for", vec);
-	ADD_Tablelayer("B", "write", vec);
-	ADD_Tablelayer("B", "read", vec);
-	ADD_Tablelayer("B", "ID", vec);
-	ADD_Tablelayer("B", "NUM", vec);
-	ADD_Tablelayer("B", "(", vec);
-	ADD_Tablelayer("B", "{", vec);
-	ADD_Tablelayer("B", ";", vec);
-	vec.clear();
 
-	vec = { "epsilon" };
-	ADD_Tablelayer("B", "}", vec);
-	vec.clear();
-	//line7
+	//line5
 	vec = { "if_stat" };
 	ADD_Tablelayer("statement", "if", vec);
 	vec.clear();
@@ -100,32 +86,36 @@ void CLL_1_Table::Init()
 	vec = { "compound_stat" };
 	ADD_Tablelayer("statement", "{", vec);
 	vec.clear();
-	
 
-	//line8,有可能需要特殊处理
-	vec = { "if","(","expr",")","statement" };
+
+	//line6,有可能需要特殊处理
+	vec = { "if","(","expr",")","statement","D" };
 	ADD_Tablelayer("if_stat", "if", vec);
 	vec.clear();
-	//line9
-	vec = { "while","(","expr",")","statement" };
+
+	vec = { "else","statement" };
+	ADD_Tablelayer("D", "else", vec);
+	vec.clear();
+	//line7
+	vec = { "while","(","expr",")","statement"};
 	ADD_Tablelayer("while_stat", "while", vec);
 	vec.clear();
-	//line10
+	//line8
 	vec = { "for","(",";","expr",";","expr",";","expr",")","statement" };
 	ADD_Tablelayer("for_stat", "for", vec);
-	//line11
-	vec = { "read","ID" };
+	//line9
+	vec = { "read","ID" ,";" };
 	ADD_Tablelayer("read_stat", "read", vec);
 	vec.clear();
-	//line12
-	vec = { "write","expr" };
+	//line10
+	vec = { "write","expr",";" };
 	ADD_Tablelayer("write_stat", "write", vec);
 	vec.clear();
-	//line13
+	//line11
 	vec = { "{","statement_list","}" };
 	ADD_Tablelayer("compound_stat", "{", vec);
 	vec.clear();
-	//line14
+	//line12
 	vec = { "expr",";" };
 	ADD_Tablelayer("expr_stat", "ID", vec);
 	ADD_Tablelayer("expr_stat", "NUM", vec);
@@ -135,7 +125,7 @@ void CLL_1_Table::Init()
 	vec = { ";" };
 	ADD_Tablelayer("expr_stat", ";", vec);
 	vec.clear();
-	//line15
+	//line13
 	vec = { "ID","=","bool_expr" };
 	ADD_Tablelayer("expr", "ID", vec);
 	vec.clear();
@@ -145,61 +135,76 @@ void CLL_1_Table::Init()
 	ADD_Tablelayer("expr", "(", vec);
 	vec.clear();
 
-	//line16
-	vec = { "additive_expr","E" };
+	//line14
+	vec = { "additive_expr","C" };
 	ADD_Tablelayer("bool_expr", "ID", vec);
 	ADD_Tablelayer("bool_expr", "NUM", vec);
 	ADD_Tablelayer("bool_expr", "(", vec);
 	vec.clear();
 
-	//line17
-	vec = { "term","C" };
+	//line15
+	vec = { "term","A" };
 	ADD_Tablelayer("additive_expr", "ID", vec);
 	ADD_Tablelayer("additive_expr", "NUM", vec);
 	ADD_Tablelayer("additive_expr", "(", vec);
 
-	//line18
+	//line16
 	vec = { "epsilon" };
-	ADD_Tablelayer("E", ";", vec);
+	ADD_Tablelayer("C", ";", vec);
 	vec.clear();
 
-	vec = { ">","<",">=","<=","==","!=","additive_expr" };
-	ADD_Tablelayer("E", ">", vec);
-	ADD_Tablelayer("E", "<", vec);
-	ADD_Tablelayer("E", ">=", vec);
-	ADD_Tablelayer("E", "<=", vec);
-	ADD_Tablelayer("E", "==", vec);
-	ADD_Tablelayer("E", "!=", vec);
+	vec = { ">","additive_expr" };
+	ADD_Tablelayer("C", ">", vec);
 	vec.clear();
 
-	//line19
-	vec = { "factor","D" };
+	vec = { "<","additive_expr" };
+	ADD_Tablelayer("C", "<", vec);
+	vec.clear();
+
+	vec = { ">=","additive_expr" };
+	ADD_Tablelayer("C", ">=", vec);
+	vec.clear();
+
+	vec = { "<=","additive_expr" };
+	ADD_Tablelayer("C", "<=", vec);
+	vec.clear();
+
+	vec = { "==","additive_expr" };
+	ADD_Tablelayer("C", "==", vec);
+	vec.clear();
+
+	vec = { "!=","additive_expr" };
+	ADD_Tablelayer("C", "!=", vec);
+	vec.clear();
+
+	//line17
+	vec = { "factor","B" };
 	ADD_Tablelayer("term", "ID", vec);
 	ADD_Tablelayer("term", "NUM", vec);
 	ADD_Tablelayer("term", "(", vec);
 	vec.clear();
 
-	//line20
+	//line18
 	vec = { "epsilon" };
-	ADD_Tablelayer("C", ")", vec);
-	ADD_Tablelayer("C", ";", vec);
-	ADD_Tablelayer("C", ">", vec);
-	ADD_Tablelayer("C", "<", vec);
-	ADD_Tablelayer("C", ">=", vec);
-	ADD_Tablelayer("C", "<=", vec);
-	ADD_Tablelayer("C", "==", vec);
-	ADD_Tablelayer("C", "!=", vec);
+	ADD_Tablelayer("A", ")", vec);
+	ADD_Tablelayer("A", ";", vec);
+	ADD_Tablelayer("A", ">", vec);
+	ADD_Tablelayer("A", "<", vec);
+	ADD_Tablelayer("A", ">=", vec);
+	ADD_Tablelayer("A", "<=", vec);
+	ADD_Tablelayer("A", "==", vec);
+	ADD_Tablelayer("A", "!=", vec);
 	vec.clear();
 
-	vec = { "+","term","D" };
-	ADD_Tablelayer("C", "+", vec);
+	vec = { "+","term","B" };
+	ADD_Tablelayer("A", "+", vec);
 	vec.clear();
 
-	vec = { "-","term","D" };
-	ADD_Tablelayer("C", "-", vec);
+	vec = { "-","term","B" };
+	ADD_Tablelayer("A", "-", vec);
 	vec.clear();
 
-	//line21
+	//line19
 	vec = { "(","expr",")" };
 	ADD_Tablelayer("factor", "(", vec);
 	vec = { "ID" };
@@ -207,27 +212,27 @@ void CLL_1_Table::Init()
 	vec = { "NUM" };
 	ADD_Tablelayer("factor", "NUM", vec);
 
-	//line22
+	//line20
 	vec = { "epsilon" };
-	ADD_Tablelayer("D", ")", vec);
-	ADD_Tablelayer("D", ";", vec);
-	ADD_Tablelayer("D", ">", vec);
-	ADD_Tablelayer("D", "<", vec);
-	ADD_Tablelayer("D", ">=", vec);
-	ADD_Tablelayer("D", "<=", vec);
-	ADD_Tablelayer("D", "==", vec);
-	ADD_Tablelayer("D", "!=", vec);
-	ADD_Tablelayer("D", "+", vec);
-	ADD_Tablelayer("D", "-", vec);
+	ADD_Tablelayer("B", ")", vec);
+	ADD_Tablelayer("B", ";", vec);
+	ADD_Tablelayer("B", ">", vec);
+	ADD_Tablelayer("B", "<", vec);
+	ADD_Tablelayer("B", ">=", vec);
+	ADD_Tablelayer("B", "<=", vec);
+	ADD_Tablelayer("B", "==", vec);
+	ADD_Tablelayer("B", "!=", vec);
+	ADD_Tablelayer("B", "+", vec);
+	ADD_Tablelayer("B", "-", vec);
 
 	vec.clear();
 
-	vec = { "*","factor","D" };
-	ADD_Tablelayer("D", "*", vec);
+	vec = { "*","factor","B" };
+	ADD_Tablelayer("B", "*", vec);
 	vec.clear();
 
-	vec = { "/","factor","D" };
-	ADD_Tablelayer("DDD", "/", vec);
+	vec = { "/","factor","B" };
+	ADD_Tablelayer("B", "/", vec);
 	vec.clear();
 	OutTable();
 }
@@ -260,7 +265,7 @@ void CLL_1_Table::OutTable()
 	for (int i = 0;i < 25;++i)
 		for (int j = 0;j < 27;++j)
 		{
-			if (m_Expr[i][j].left != ""&&(!m_Expr[i][j].right.empty()))
+			if (m_Expr[i][j].left != "" && (!m_Expr[i][j].right.empty()))
 			{
 				m_file.FileFormat(20);
 				m_file.FileWrite(m_NoumMapSet.GetSymbolNameByID(i));
@@ -273,7 +278,7 @@ void CLL_1_Table::OutTable()
 				{
 					str += iter + ' ';
 				}
-				m_file.FileWrite(str+'\n');
+				m_file.FileWrite(str + '\n');
 
 			}
 		}

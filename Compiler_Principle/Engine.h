@@ -18,7 +18,7 @@ private:
 	CStateManger m_StateManger;
 	CTranslateRelation m_TransRelation;
 	CInformationManager m_infManager;
-	CReceivingData m_ReceivingData;
+	CReceivingData *m_ReceivingData;
 	CSyntaxAnalysis m_SySyntaxAnalysis;
 
 	int m_indexLine;									//当前处理第几行
@@ -46,4 +46,5 @@ public:
 	void WrongHintManger(int &ptr);						//错误信息统计
 	void Right_DataAnalysis(int &ptr, const int& indexLine);					//正确信息的分析
 	void CloseFile();									//关闭文件
+	void SyntaxAnalysisProcess();
 };

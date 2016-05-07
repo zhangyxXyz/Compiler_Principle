@@ -12,11 +12,20 @@ int main()
 		CEngine *progressEngine = new CEngine();
 		cout << "请输入待处理的源程序文件路径：\n\t";
 		cin >> m_filePath;
-		progressEngine->OpenFile(m_filePath);
-		progressEngine->Init();
-		progressEngine->FileReader();
-		progressEngine->CloseFile();
-		delete(progressEngine);
+		/*************************************
+		*词法分析
+		*
+		*语法分析:	SyntaxAnalysisProcess
+		**************************************/
+		if (progressEngine->OpenFile(m_filePath))
+		{
+			progressEngine->Init();
+			progressEngine->FileReader();
+			progressEngine->CloseFile();
+
+			progressEngine->SyntaxAnalysisProcess();
+			delete(progressEngine);
+		}
 	}
 	return 0;
 }

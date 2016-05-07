@@ -18,6 +18,7 @@
 #include <vector>
 #include <cstdlib>
 #include <algorithm>
+#include <stack>
 #include <stdexcept>
 using namespace std;
 

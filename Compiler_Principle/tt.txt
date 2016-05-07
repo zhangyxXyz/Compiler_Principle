@@ -1,0 +1,7 @@
+{
+while(x>0)
+x=x-1;
+read A;
+}
+read B;
+}

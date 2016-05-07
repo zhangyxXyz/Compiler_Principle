@@ -8,12 +8,15 @@ CEngine::CEngine()
 
 CEngine::~CEngine()
 {
+	m_ReceivingData = nullptr;
+	delete m_ReceivingData;
 }
 
 
 void CEngine::Init()
 {
 	m_indexLine = 0;
+	m_ReceivingData = new CReceivingData();
 	m_terminal = false;
 	m_now_Data = m_rest_Data = "";
 	m_nowStateStartline = 1;
@@ -23,7 +26,7 @@ void CEngine::Init()
 	m_StateManger.StateInit();
 	m_TransRelation.TranslateRelationInit(m_CharacterTable, m_StateManger);
 	m_infManager.Init();
-	m_SySyntaxAnalysis.Init();
+	m_SySyntaxAnalysis.Init(m_ReceivingData);
 }
 
 
@@ -50,7 +53,7 @@ void CEngine::FileReader()
 	}
 	FinalStateJudge();
 	m_infManager.WrongHintInfo();
-	m_ReceivingData.ProcessedDataOut();
+	m_ReceivingData->ProcessedDataOut();
 	if (m_rest_Data.length())
 		cout << "成功识别的内容如下:\n";
 	m_infManager.IdentifierHintInfo();
@@ -152,7 +155,7 @@ void CEngine::Right_DataAnalysis(int &ptr, const int& indexLine)
 		m_infManager.Hint_Category(k, str);
 		if (k < 10)
 		{
-			m_ReceivingData.ProcessedData_ADD(k, str, indexLine);
+			m_ReceivingData->ProcessedData_ADD(k, str, indexLine);
 		}
 		//cout << "识别成功: " << str << endl;
 	}
@@ -166,4 +169,10 @@ void CEngine::CloseFile()
 	if (m_file.fail())
 		return;
 	m_file.close();
+}
+
+
+void CEngine::SyntaxAnalysisProcess()
+{
+	m_SySyntaxAnalysis.Process();
 }

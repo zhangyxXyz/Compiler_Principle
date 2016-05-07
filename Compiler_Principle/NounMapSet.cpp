@@ -20,11 +20,10 @@ void CNounMapSet::Init()
 	m_Symbol.insert(pair<string, int>("program", ++cnt));
 	m_Symbol.insert(pair<string, int>("declaration_list", ++cnt));
 	m_Symbol.insert(pair<string, int>("statement_list", ++cnt));
-	m_Symbol.insert(pair<string, int>("A", ++cnt));
 	m_Symbol.insert(pair<string, int>("declaration_stat", ++cnt));
-	m_Symbol.insert(pair<string, int>("B", ++cnt));
 	m_Symbol.insert(pair<string, int>("statement", ++cnt));
 	m_Symbol.insert(pair<string, int>("if_stat", ++cnt));
+	m_Symbol.insert(pair<string, int>("D", ++cnt));
 	m_Symbol.insert(pair<string, int>("while_stat", ++cnt));
 	m_Symbol.insert(pair<string, int>("for_stat", ++cnt));
 	m_Symbol.insert(pair<string, int>("read_stat", ++cnt));
@@ -34,11 +33,11 @@ void CNounMapSet::Init()
 	m_Symbol.insert(pair<string, int>("expr", ++cnt));
 	m_Symbol.insert(pair<string, int>("bool_expr", ++cnt));
 	m_Symbol.insert(pair<string, int>("additive_expr", ++cnt));
-	m_Symbol.insert(pair<string, int>("E", ++cnt));
-	m_Symbol.insert(pair<string, int>("term", ++cnt));
 	m_Symbol.insert(pair<string, int>("C", ++cnt));
+	m_Symbol.insert(pair<string, int>("term", ++cnt));
+	m_Symbol.insert(pair<string, int>("A", ++cnt));
 	m_Symbol.insert(pair<string, int>("factor", ++cnt));
-	m_Symbol.insert(pair<string, int>("D", ++cnt));
+	m_Symbol.insert(pair<string, int>("B", ++cnt));
 	cnt = -1;
 	m_intSymbol.insert(pair<string, int>("int", ++cnt));
 	m_intSymbol.insert(pair<string, int>("if", ++cnt));
@@ -49,6 +48,7 @@ void CNounMapSet::Init()
 	m_intSymbol.insert(pair<string, int>("read", ++cnt));
 	m_intSymbol.insert(pair<string, int>("ID", ++cnt));
 	m_intSymbol.insert(pair<string, int>("NUM", ++cnt));
+	m_intSymbol.insert(pair<string, int>("=", ++cnt));
 	m_intSymbol.insert(pair<string, int>("(", ++cnt));
 	m_intSymbol.insert(pair<string, int>(")", ++cnt));
 	m_intSymbol.insert(pair<string, int>("{", ++cnt));
@@ -80,8 +80,8 @@ int CNounMapSet::GetSynbolIDByName(const string& name)
 	}
 	catch (runtime_error err)
 	{
-		cout << err.what()
-			<< "出现无法匹配的终结符号" << name << endl;
+		//cout << err.what()
+		//	<< "出现无法匹配的终结符号" << name << endl;
 		return -1;
 	}
 	return m_Symbol[name];
@@ -102,8 +102,8 @@ string CNounMapSet::GetSymbolNameByID(const int& ID)
 	}
 	catch(runtime_error err)
 	{
-		cout << err.what()
-			<< "出现无法匹配的非终结符号\n";
+		//cout << err.what()
+		//	<< "出现无法匹配的非终结符号\n";
 	}
 	return string();
 }
@@ -120,8 +120,8 @@ int CNounMapSet::GetIntSymbolIDByName(const string& name)
 	}
 	catch (runtime_error err)
 	{
-		cout << err.what()
-			<< "出现无法匹配的非终结符号"<<name<<endl;
+		//cout << err.what()
+		//	<< "出现无法匹配的非终结符号"<<name<<endl;
 		return -1;
 	}
 	return m_intSymbol[name];
@@ -141,8 +141,8 @@ string CNounMapSet::GetIntSymbolNameByID(const int& ID)
 	}
 	catch (runtime_error err)
 	{
-		cout << err.what()
-			<< "出现无法匹配的终结符号\n";
+		//cout << err.what()
+		//	<< "出现无法匹配的终结符号\n";
 	}
 	return string();
 }

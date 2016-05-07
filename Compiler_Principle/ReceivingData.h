@@ -22,8 +22,8 @@ class CReceivingData
 public:
 	CReceivingData();
 	~CReceivingData();
-private:
 	vector<CProcessedData> m_ProcessedData;			//词法分析处理结果数据
+private:
 	CFileDatabyTxt m_file;							//用于输出预处理的数据
 public:
 	//添加预处理数据
