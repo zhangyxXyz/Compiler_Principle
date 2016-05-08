@@ -1,6 +1,7 @@
 {
+int 2k-;
 while(x<=)
 ;
-}
-}
+else x=1;
+
 }

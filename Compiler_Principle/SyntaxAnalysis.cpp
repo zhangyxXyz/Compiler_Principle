@@ -166,8 +166,12 @@ void CSyntaxAnalysis::Process()
 					}
 					m_SymbolStack.pop();
 				}
-				//其他错误
-				else cout << "Line " << iter->m_indexLine << "ERROR~~" << endl;
+				//其他错误（eg:多个符号不匹配）
+				else
+				{
+					m_SymbolStack.pop();
+					cout << "Line " << iter->m_indexLine << "ERROR~~" << endl;
+				}
 
 				m_isFail = true;
 			}
