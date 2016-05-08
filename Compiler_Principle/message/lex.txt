@@ -1,4 +1,4 @@
-成功识别的内容如下:
+词法分析成功识别的内容如下:
 标识符:int a i b c for while x C y if read else write 
 保留字:int for while if read else write 
 无符号整数:2 1 10 

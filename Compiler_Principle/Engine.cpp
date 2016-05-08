@@ -55,7 +55,7 @@ void CEngine::FileReader()
 	m_infManager.WrongHintInfo();
 	m_ReceivingData->ProcessedDataOut();
 	if (m_rest_Data.length())
-		cout << "成功识别的内容如下:\n";
+		cout << "----词法分析成功识别的内容如下:\n";
 	m_infManager.IdentifierHintInfo();
 	m_infManager.ReservedWordHintInfo();
 	m_infManager.UnsignedNumHintInfo();

@@ -72,6 +72,9 @@
     <ClInclude Include="SyntaxAnalysis.h">
       <Filter>头文件\语法分析</Filter>
     </ClInclude>
+    <ClInclude Include="First_Follow.h">
+      <Filter>头文件\语法分析</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -108,6 +111,9 @@
       <Filter>源文件\语法分析</Filter>
     </ClCompile>
     <ClCompile Include="SyntaxAnalysis.cpp">
+      <Filter>源文件\语法分析</Filter>
+    </ClCompile>
+    <ClCompile Include="First_Follow.cpp">
       <Filter>源文件\语法分析</Filter>
     </ClCompile>
   </ItemGroup>

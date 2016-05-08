@@ -31,7 +31,7 @@ void CInformationManager::Init()
 	m_WrongHint.clear();
 
 	m_filebyTxt.FileOpen("./message/lex.txt");
-	m_filebyTxt.FileWrite("成功识别的内容如下:\n");
+	m_filebyTxt.FileWrite("词法分析成功识别的内容如下:\n");
 }
 
 
@@ -166,6 +166,7 @@ void CInformationManager::NoteHintInfo()
 		cout << endl;
 	}
 	m_filebyTxt.FileClose();//识别内容写入的文档在处理完最后一类信息后关闭
+	cout << "----语法分析结果如下:" << endl;
 }
 
 

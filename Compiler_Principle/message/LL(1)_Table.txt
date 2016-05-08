@@ -7,6 +7,7 @@ declaration_list    write     declaration_list              epsilon
 declaration_list    read      declaration_list              epsilon 
 declaration_list    ID        declaration_list              epsilon 
 declaration_list    NUM       declaration_list              epsilon 
+declaration_list    (         declaration_list              epsilon 
 declaration_list    {         declaration_list              epsilon 
 declaration_list    }         declaration_list              epsilon 
 declaration_list    ;         declaration_list              epsilon 
@@ -35,7 +36,7 @@ statement           ;         statement                     expr_stat
 if_stat             if        if_stat                       if ( expr ) statement D 
 D                   else      D                             else statement 
 while_stat          while     while_stat                    while ( expr ) statement 
-for_stat            for       for_stat                      for ( ; expr ; expr ; expr ) statement 
+for_stat            for       for_stat                      for ( expr ; expr ; expr ) statement 
 read_stat           read      read_stat                     read ID ; 
 write_stat          write     write_stat                    write expr ; 
 compound_stat       {         compound_stat                 { statement_list } 
@@ -52,6 +53,7 @@ bool_expr           (         bool_expr                     additive_expr C
 additive_expr       ID        additive_expr                 term A 
 additive_expr       NUM       additive_expr                 term A 
 additive_expr       (         additive_expr                 term A 
+C                   )         C                             epsilon 
 C                   >         C                             > additive_expr 
 C                   <         C                             < additive_expr 
 C                   >=        C                             >= additive_expr 
@@ -69,8 +71,8 @@ A                   >=        A                             epsilon
 A                   <=        A                             epsilon 
 A                   ==        A                             epsilon 
 A                   !=        A                             epsilon 
-A                   +         A                             + term B 
-A                   -         A                             - term B 
+A                   +         A                             + term A 
+A                   -         A                             - term A 
 A                   ;         A                             epsilon 
 factor              ID        factor                        ID 
 factor              NUM       factor                        NUM 

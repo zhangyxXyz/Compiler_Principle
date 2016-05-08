@@ -14,5 +14,4 @@ private:
 public:
 	void Init(const CReceivingData *ptr);
 	void Process();
-	void ErrorHint();
 };

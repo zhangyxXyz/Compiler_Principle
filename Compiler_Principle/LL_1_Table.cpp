@@ -16,6 +16,7 @@ void CLL_1_Table::Init()
 {
 	vector<string> vec;
 	m_NoumMapSet.Init();
+	m_First_Follow.Init();
 	//line1
 	vec = { "{","declaration_list","statement_list","}" };
 	ADD_Tablelayer("program", "{", vec);
@@ -36,6 +37,7 @@ void CLL_1_Table::Init()
 	ADD_Tablelayer("declaration_list", "{", vec);
 	ADD_Tablelayer("declaration_list", "}", vec);
 	ADD_Tablelayer("declaration_list", ";", vec);
+	ADD_Tablelayer("declaration_list", "(", vec);
 	vec.clear();
 	//line3
 	vec = { "statement","statement_list" };
@@ -101,7 +103,7 @@ void CLL_1_Table::Init()
 	ADD_Tablelayer("while_stat", "while", vec);
 	vec.clear();
 	//line8
-	vec = { "for","(",";","expr",";","expr",";","expr",")","statement" };
+	vec = { "for","(","expr",";","expr",";","expr",")","statement" };
 	ADD_Tablelayer("for_stat", "for", vec);
 	//line9
 	vec = { "read","ID" ,";" };
@@ -151,6 +153,7 @@ void CLL_1_Table::Init()
 	//line16
 	vec = { "epsilon" };
 	ADD_Tablelayer("C", ";", vec);
+	ADD_Tablelayer("C", ")", vec);
 	vec.clear();
 
 	vec = { ">","additive_expr" };
@@ -196,11 +199,11 @@ void CLL_1_Table::Init()
 	ADD_Tablelayer("A", "!=", vec);
 	vec.clear();
 
-	vec = { "+","term","B" };
+	vec = { "+","term","A" };
 	ADD_Tablelayer("A", "+", vec);
 	vec.clear();
 
-	vec = { "-","term","B" };
+	vec = { "-","term","A" };
 	ADD_Tablelayer("A", "-", vec);
 	vec.clear();
 
