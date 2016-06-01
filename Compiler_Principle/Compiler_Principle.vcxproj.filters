@@ -37,6 +37,12 @@
     <Filter Include="头文件\语法&amp;语义">
       <UniqueIdentifier>{0690f17c-cc62-41b1-b925-e4250a634824}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\Test语言抽象机">
+      <UniqueIdentifier>{e36ddffe-f32b-44b1-a4cb-9986db6c70a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Test语言抽象机">
+      <UniqueIdentifier>{c942f573-a11d-4da6-9ec9-50db5ba321a8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -90,6 +96,9 @@
     <ClInclude Include="SymbolTable.h">
       <Filter>头文件\语法&amp;语义</Filter>
     </ClInclude>
+    <ClInclude Include="AbstractMachine.h">
+      <Filter>头文件\Test语言抽象机</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -136,6 +145,9 @@
     </ClCompile>
     <ClCompile Include="SymbolTable.cpp">
       <Filter>源文件\语法&amp;语义</Filter>
+    </ClCompile>
+    <ClCompile Include="AbstractMachine.cpp">
+      <Filter>源文件\Test语言抽象机</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

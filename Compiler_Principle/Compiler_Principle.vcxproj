@@ -149,6 +149,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AbstractMachine.h" />
     <ClInclude Include="CharacterTable.h" />
     <ClInclude Include="DataProcess.h" />
     <ClInclude Include="Engine.h" />
@@ -167,6 +168,7 @@
     <ClInclude Include="TranslateRelation.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AbstractMachine.cpp" />
     <ClCompile Include="CharacterTable.cpp" />
     <ClCompile Include="Compiler_Principle.cpp" />
     <ClCompile Include="Engine.cpp" />

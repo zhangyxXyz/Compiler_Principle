@@ -18,14 +18,16 @@ void CGrammarManager::Init(const CReceivingData *ptr)
 
 
 
-void CGrammarManager::Process()
+bool CGrammarManager::Process()
 {
+	cout << "--语法分析完成\n";
+	isWrong = false;
 	m_nowIndex = 0;					//初始化处理的操作符号的位置
 	m_isHaveWrong = false;
 	m_LableNum = 1;
 	Program();
 	OutMiddleCode();
-
+	return isWrong;
 }
 
 void CGrammarManager::Program()
@@ -84,7 +86,10 @@ void CGrammarManager::Declaration_Stat()
 		if (!m_isHaveWrong)
 		{
 			if (!m_PropertyTable.Insert(WORDDATA.m_name))
+			{
 				cout << "Line" << WORDDATA.m_indexLine << "： 变量 " << WORDDATA.m_name << " 重定义" << endl;
+				isWrong = true;
+			}
 		}
 		GetNextSymbol();
 	}
@@ -488,7 +493,12 @@ void CGrammarManager::Expression()
 		if (!m_isHaveWrong)
 		{
 			if (!m_PropertyTable.IsFindSymbol(WORDDATA.m_name))
+			{
 				cout << "Line" << WORDDATA.m_indexLine << "： 变量 " << WORDDATA.m_name << " 未定义" << endl;
+				//m_PropertyTable.Insert(WORDDATA.m_name);
+				isWrong = true;
+			}
+			
 
 		}
 
@@ -629,11 +639,14 @@ void CGrammarManager::Factor()
 				if (!m_PropertyTable.IsFindSymbol(WORDDATA.m_name))
 				{
 					cout << "Line" << WORDDATA.m_indexLine << "： 变量 " << WORDDATA.m_name << " 未定义" << endl;
+					//m_PropertyTable.Insert(WORDDATA.m_name);
+					isWrong = true;
 				}
 				else if (!m_PropertyTable.IsHaveData(WORDDATA.m_name))
 				{
 					cout << "Line" << WORDDATA.m_indexLine << "： 变量 " << WORDDATA.m_name << " 未初始化" << endl;
 					m_PropertyTable.SetData(WORDDATA.m_name, 0);
+					isWrong = true;
 				}
 			}
 
@@ -659,7 +672,99 @@ void CGrammarManager::OutMiddleCode()
 	m_file.FileOpen("./message/middleCode.txt");
 	for (auto iter : m_middleCode)
 	{
-		m_file.FileWrite(iter + "\n");
+		if (iter.find("LABEL") == 0)
+			m_file.FileWrite(iter + "\n");
+		else
+			m_file.FileWrite("      " + iter + "\n");
 	}
 	m_file.FileClose();
+}
+
+
+
+//具体的属性文法及动作
+
+string CGrammarManager::newLabel()
+{
+	return string("LABEL") + m_LableNum++;
+}
+void CGrammarManager::Pop()
+{
+	m_middleCode.push_back(string("POP"));
+}
+int CGrammarManager::Look(string word)
+{
+	return m_PropertyTable.GetAddByNmme(word);
+}
+void CGrammarManager::Sto(int address)
+{
+	m_middleCode.push_back(string("STO ") + address);
+}
+void CGrammarManager::Gt()
+{
+	m_middleCode.push_back(string("GT"));
+}
+void CGrammarManager::Les()
+{
+	m_middleCode.push_back(string("LES"));
+}
+void CGrammarManager::Ge()
+{
+	m_middleCode.push_back(string("GE"));
+}
+void CGrammarManager::Le()
+{
+	m_middleCode.push_back(string("LE"));
+}
+void CGrammarManager::Eq()
+{
+	m_middleCode.push_back(string("EQ"));
+}
+void CGrammarManager::Noteq()
+{
+	m_middleCode.push_back(string("NOTEQ"));
+}
+void CGrammarManager::Add()
+{
+	m_middleCode.push_back(string("ADD"));
+}
+void CGrammarManager::Sub()
+{
+	m_middleCode.push_back(string("SUB"));
+}
+void CGrammarManager::Mult()
+{
+	m_middleCode.push_back(string("MULT"));
+}
+void CGrammarManager::Div()
+{
+	m_middleCode.push_back(string("DIV"));
+}
+void CGrammarManager::Load(int address)
+{
+	m_middleCode.push_back(string("LOAD ") + address);
+}
+void CGrammarManager::Loadi(int num)
+{
+	m_middleCode.push_back(string("LOADI ") + num);
+}
+void CGrammarManager::Brf(string label)
+{
+	m_middleCode.push_back(string("BRF ") + label);
+}
+void CGrammarManager::Br(string label)
+{
+	m_middleCode.push_back(string("BR ") + label);
+}
+void CGrammarManager::Setlabel(string label)
+{
+	m_middleCode.push_back(label + ":");
+}
+void CGrammarManager::In()
+{
+	m_middleCode.push_back(string("IN"));
+}
+void CGrammarManager::Out()
+{
+	m_middleCode.push_back(string("OUT"));
 }

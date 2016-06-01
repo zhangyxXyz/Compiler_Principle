@@ -1,6 +1,1 @@
 词法分析成功识别的内容如下:
-标识符:int a i read for write 
-保留字:int read for write 
-无符号整数:0 5 1 
-分界符:{ ; ( ) } 
-运算符:= < + 

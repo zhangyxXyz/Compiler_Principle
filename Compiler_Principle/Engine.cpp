@@ -55,14 +55,15 @@ void CEngine::FileReader()
 	FinalStateJudge();
 	m_infManager.WrongHintInfo();
 	m_ReceivingData->ProcessedDataOut();
-	if (m_rest_Data.length())
+	cout << "--词法分析完成\n";
+	/*if (m_rest_Data.length())
 		cout << "----词法分析成功识别的内容如下:\n";
 	m_infManager.IdentifierHintInfo();
 	m_infManager.ReservedWordHintInfo();
 	m_infManager.UnsignedNumHintInfo();
 	m_infManager.DelimiterHintInfo();
 	m_infManager.OperatorHintInfo();
-	m_infManager.NoteHintInfo();
+	m_infManager.NoteHintInfo();*/
 }
 
 
@@ -173,8 +174,8 @@ void CEngine::CloseFile()
 }
 
 
-void CEngine::SyntaxAnalysisProcess()
+bool CEngine::SyntaxAnalysisProcess()
 {
-	m_GrammarManager.Process();			//运行语法&语义分析
+	return m_GrammarManager.Process();			//运行语法&语义分析
 	//m_SySyntaxAnalysis.Process();
 }

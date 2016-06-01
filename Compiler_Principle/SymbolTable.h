@@ -16,6 +16,7 @@ public:
 	{
 		m_name = name;
 		m_Add = add;
+		m_isHaveData = false;
 	}
 };
 
@@ -30,7 +31,7 @@ public:
 	bool IsHaveData(const string& m_name);
 	int GetAddByNmme(const string& m_name);
 public:
-	int m_NowAddIndex;			//当前分配地址位置
-	map<string, Symbol> m_SymbolTable;
+	int m_NowAddIndex;							//当前分配地址位置
+	map<string, Symbol> m_SymbolTable;			//map容器对应变量对应属性值
 };
 

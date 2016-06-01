@@ -48,5 +48,5 @@ public:
 	void WrongHintManger(int &ptr);						//错误信息统计
 	void Right_DataAnalysis(int &ptr, const int& indexLine);					//正确信息的分析
 	void CloseFile();									//关闭文件
-	void SyntaxAnalysisProcess();
+	bool SyntaxAnalysisProcess();
 };

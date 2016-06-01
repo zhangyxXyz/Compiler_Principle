@@ -17,11 +17,12 @@ private:
 	CSymbolTable m_PropertyTable;					//属性表
 	int m_nowIndex;									//控制单词的访问位置
 	bool m_isHaveWrong;								//是否分析出了错误
+	bool isWrong;						
 	int m_LableNum;									//当前处理的标签位置
 //语义分析递归下降
 public:
 	void Init(const CReceivingData *ptr);
-	void Process();
+	bool Process();
 	int GetNextSymbol() { return ++m_nowIndex; }	//放回当前操作地址的下一位
 	void Program();
 	void Declaration_List();
@@ -46,28 +47,27 @@ public:
 
 //语义&中间代码,属性翻译
 public:
-	void Pop() { m_middleCode.push_back(string("        POP")); }
-	int Look(string word) { return m_PropertyTable.GetAddByNmme(word); }
-	void Sto(int address) { m_middleCode.push_back(string("        STO ") + address); }
-	void Gt() { m_middleCode.push_back(string("        GT")); }
-	void Les() { m_middleCode.push_back(string("        LES")); }
-	void Ge() { m_middleCode.push_back(string("        GE")); }
-	void Le() { m_middleCode.push_back(string("        LE")); }
-	void Eq() { m_middleCode.push_back(string("        EQ")); }
-	void Noteq() { m_middleCode.push_back(string("        NOTEQ")); }
-	void Add() { m_middleCode.push_back(string("        ADD")); }
-	void Sub() { m_middleCode.push_back(string("        SUB")); }
-	void Mult() { m_middleCode.push_back(string("        MULT")); }
-	void Div() { m_middleCode.push_back(string("        DIV")); }
-	void Load(int address) { m_middleCode.push_back(string("        LOAD ") + address); }
-	void Loadi(int num) { m_middleCode.push_back(string("        LOADI ") + num); }
-	void Brf(string label) { m_middleCode.push_back(string("        BRF ") + label); }
-	void Br(string label) { m_middleCode.push_back(string("        BR ") + label); }
-	void Setlabel(string label) { m_middleCode.push_back(label + ":"); }
-	void In() { m_middleCode.push_back(string("        IN")); }
-	void Out() { m_middleCode.push_back(string("        OUT")); }
-
-	string newLabel() { return string("LABEL") + m_LableNum++; }
+	void Pop();
+	int Look(string m_name);
+	void Sto(int address);
+	void Gt();
+	void Les();
+	void Ge();
+	void Le();
+	void Eq();
+	void Noteq();
+	void Add();
+	void Sub();
+	void Mult();
+	void Div();
+	void Load(int address);
+	void Loadi(int num);
+	void Brf(string label);
+	void Br(string label);
+	void Setlabel(string label);
+	void In();
+	void Out();
+	string newLabel();
 public:
 	void OutMiddleCode();		//输出中间代码
 };

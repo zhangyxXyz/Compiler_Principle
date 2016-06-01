@@ -44,7 +44,7 @@ bool CSymbolTable::SetData(const string &m_name, const int& m_dada)
 	}
 	catch (runtime_error err)
 	{
-		cout << err.what();
+		//cout << err.what();
 		return false;
 	}
 }
@@ -59,7 +59,7 @@ bool CSymbolTable::IsHaveData(const string& m_name)
 	}
 	catch (runtime_error err)
 	{
-		cout << err.what();
+		//cout << err.what();
 		return false;
 	}
 }
@@ -74,7 +74,7 @@ int CSymbolTable::GetAddByNmme(const string& m_name)
 	}
 	catch (runtime_error err)
 	{
-		cout << err.what();
+		//cout << err.what();
 		return -1;
 	}
 }
