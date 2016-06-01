@@ -5,6 +5,7 @@
 #include "InformationManager.h"
 #include "ReceivingData.h"
 #include "SyntaxAnalysis.h"
+#include "GrammarManager.h"
 class CEngine
 {
 public:
@@ -20,6 +21,7 @@ private:
 	CInformationManager m_infManager;
 	CReceivingData *m_ReceivingData;
 	CSyntaxAnalysis m_SySyntaxAnalysis;
+	CGrammarManager m_GrammarManager;
 
 	int m_indexLine;									//当前处理第几行
 	int m_nowStateStartline;							//当前状态的处理起始行

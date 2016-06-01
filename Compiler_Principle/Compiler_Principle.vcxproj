@@ -88,11 +88,15 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -146,15 +150,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CharacterTable.h" />
+    <ClInclude Include="DataProcess.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="FileDatabyTxt.h" />
     <ClInclude Include="First_Follow.h" />
+    <ClInclude Include="GrammarManager.h" />
     <ClInclude Include="InformationManager.h" />
     <ClInclude Include="LL_1_Table.h" />
     <ClInclude Include="NounMapSet.h" />
     <ClInclude Include="ReceivingData.h" />
     <ClInclude Include="StateManger.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="SymbolTable.h" />
     <ClInclude Include="SyntaxAnalysis.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TranslateRelation.h" />
@@ -165,6 +172,7 @@
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="FileDatabyTxt.cpp" />
     <ClCompile Include="First_Follow.cpp" />
+    <ClCompile Include="GrammarManager.cpp" />
     <ClCompile Include="InformationManager.cpp" />
     <ClCompile Include="LL_1_Table.cpp" />
     <ClCompile Include="NounMapSet.cpp" />
@@ -176,6 +184,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SymbolTable.cpp" />
     <ClCompile Include="SyntaxAnalysis.cpp" />
     <ClCompile Include="TranslateRelation.cpp" />
   </ItemGroup>

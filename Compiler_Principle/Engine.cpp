@@ -26,7 +26,8 @@ void CEngine::Init()
 	m_StateManger.StateInit();
 	m_TransRelation.TranslateRelationInit(m_CharacterTable, m_StateManger);
 	m_infManager.Init();
-	m_SySyntaxAnalysis.Init(m_ReceivingData);
+	m_GrammarManager.Init(m_ReceivingData);				//递归下降分析
+	//m_SySyntaxAnalysis.Init(m_ReceivingData);			  //LL(1)分析表分析
 }
 
 
@@ -174,5 +175,6 @@ void CEngine::CloseFile()
 
 void CEngine::SyntaxAnalysisProcess()
 {
-	m_SySyntaxAnalysis.Process();
+	m_GrammarManager.Process();			//运行语法&语义分析
+	//m_SySyntaxAnalysis.Process();
 }

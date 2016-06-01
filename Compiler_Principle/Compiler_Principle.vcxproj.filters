@@ -31,6 +31,12 @@
     <Filter Include="源文件\文件输出管理">
       <UniqueIdentifier>{f2b703f6-247f-47b0-b4ac-0be41a51e458}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\语法&amp;语义">
+      <UniqueIdentifier>{d3a000f7-7071-4a89-8f92-5d3625f3ca02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\语法&amp;语义">
+      <UniqueIdentifier>{0690f17c-cc62-41b1-b925-e4250a634824}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -75,6 +81,15 @@
     <ClInclude Include="First_Follow.h">
       <Filter>头文件\语法分析</Filter>
     </ClInclude>
+    <ClInclude Include="GrammarManager.h">
+      <Filter>头文件\语法&amp;语义</Filter>
+    </ClInclude>
+    <ClInclude Include="DataProcess.h">
+      <Filter>头文件\语法&amp;语义</Filter>
+    </ClInclude>
+    <ClInclude Include="SymbolTable.h">
+      <Filter>头文件\语法&amp;语义</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -115,6 +130,12 @@
     </ClCompile>
     <ClCompile Include="First_Follow.cpp">
       <Filter>源文件\语法分析</Filter>
+    </ClCompile>
+    <ClCompile Include="GrammarManager.cpp">
+      <Filter>源文件\语法&amp;语义</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbolTable.cpp">
+      <Filter>源文件\语法&amp;语义</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

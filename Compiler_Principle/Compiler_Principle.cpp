@@ -15,7 +15,7 @@ int main()
 		/*************************************
 		*词法分析
 		*
-		*语法分析:	SyntaxAnalysisProcess
+		*语法&语义&中间代码生成:	SyntaxAnalysisProcess
 		**************************************/
 		if (progressEngine->OpenFile(m_filePath))
 		{
