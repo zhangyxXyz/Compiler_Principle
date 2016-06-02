@@ -7,8 +7,8 @@
 
 int main()
 {
-	string m_filePath;  //读取文件路径
-	string userOper;	//用户操作是否执行抽象机代码
+	string m_filePath;		//读取文件路径
+	string userOper;		//用户操作是否执行抽象机代码
 	bool DontRunMachine;	//是否有错，是否启动操作
 	while (true)
 	{

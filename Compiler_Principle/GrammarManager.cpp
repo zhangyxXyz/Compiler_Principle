@@ -20,7 +20,7 @@ void CGrammarManager::Init(const CReceivingData *ptr)
 
 bool CGrammarManager::Process()
 {
-	cout << "--语法分析完成\n";
+	cout << "--语法&语义分析完成\n";
 	isWrong = false;
 	m_nowIndex = 0;					//初始化处理的操作符号的位置
 	m_isHaveWrong = false;
@@ -41,6 +41,7 @@ void CGrammarManager::Program()
 	{
 		//报错
 		cout << "Line" << PREWORDDATA.m_indexLine << "： 缺失 '{'" << endl;
+		m_isHaveWrong = true;
 	}
 	Declaration_List();
 	Statement_List();
@@ -52,6 +53,7 @@ void CGrammarManager::Program()
 	{
 		//报错
 		cout << "Line" << PREWORDDATA.m_indexLine << "： 缺失 '}'" << endl;
+		m_isHaveWrong = true;
 	}
 	m_isHaveWrong = false;
 }
@@ -78,11 +80,12 @@ void CGrammarManager::Declaration_Stat()
 	{
 		//报错
 		cout << "Line" << PREWORDDATA.m_indexLine << "： 缺失 'int'" << endl;
+		m_isHaveWrong = true;
 	}
 
 	if (WORDDATA.m_type == "ID")
 	{
-		//语义动作：查符号表判断是否重定义，添加到符号表中。
+		//语义动作：查符号表判断是否重定义，并执行插入操作
 		if (!m_isHaveWrong)
 		{
 			if (!m_PropertyTable.Insert(WORDDATA.m_name))
@@ -97,6 +100,7 @@ void CGrammarManager::Declaration_Stat()
 	{
 		//报错
 		cout << "Line" << PREWORDDATA.m_indexLine << "： int后缺失标识符" << endl;
+		m_isHaveWrong = true;
 	}
 
 	if (WORDDATA.m_name == ";")
@@ -107,6 +111,7 @@ void CGrammarManager::Declaration_Stat()
 	{
 		//报错
 		cout << "Line" << PREWORDDATA.m_indexLine << "： 标识符" << PREWORDDATA.m_name << " 后缺失 ';'" << endl;
+		m_isHaveWrong = true;
 	}
 }
 
@@ -164,6 +169,7 @@ void CGrammarManager::Statement()
 	{
 		//报错
 		cout << "Line" << PREWORDDATA.m_indexLine << "： 错误引用了符号" << PREWORDDATA.m_name << endl;
+		m_isHaveWrong = true;
 	}
 }
 
@@ -178,6 +184,7 @@ void CGrammarManager::If_Stat()
 	{
 		//报错
 		cout << "Line" << PREWORDDATA.m_indexLine << "： 缺少 'if' " << endl;
+		m_isHaveWrong = true;
 	}
 
 	if (WORDDATA.m_name == "(")
@@ -188,6 +195,7 @@ void CGrammarManager::If_Stat()
 	{
 		//报错
 		cout << "Line" << PREWORDDATA.m_indexLine << "： if 后缺失 '('" << endl;
+		m_isHaveWrong = true;
 	}
 	Expression();
 
@@ -199,6 +207,7 @@ void CGrammarManager::If_Stat()
 	{
 		//报错
 		cout << "Line" << PREWORDDATA.m_indexLine << "：" << PREWORDDATA.m_name << " 后缺失 ')'" << endl;
+		m_isHaveWrong = true;
 	}
 
 	//中间代码生成@BRF
@@ -231,9 +240,10 @@ void CGrammarManager::While_Stat()
 	{
 		//报错
 		cout << "Line" << PREWORDDATA.m_indexLine << "： 缺少 'while' " << endl;
+		m_isHaveWrong = true;
 	}
 
-	//中间代码生成
+	//中间代码生成@LABLE
 	string label1 = newLabel();
 	string label2 = newLabel();
 	Setlabel(label1);
@@ -246,6 +256,7 @@ void CGrammarManager::While_Stat()
 	{
 		//报错
 		cout << "Line" << PREWORDDATA.m_indexLine << "： while 后缺失 '('" << endl;
+		m_isHaveWrong = true;
 	}
 	Expression();
 	if (WORDDATA.m_name == ")")
@@ -256,13 +267,12 @@ void CGrammarManager::While_Stat()
 	{
 		//报错
 		cout << "Line" << PREWORDDATA.m_indexLine << "：" << PREWORDDATA.m_name << " 后缺失 ')'" << endl;
+		m_isHaveWrong = true;
 	}
 
 	//中间代码生成
 	Brf(label2);
 	Statement();
-
-	//中间代码生成
 	Br(label1);
 	Setlabel(label2);
 }
@@ -282,6 +292,7 @@ void CGrammarManager::For_Stat()
 	{
 		//报错
 		cout << "Line" << PREWORDDATA.m_indexLine << "： 缺少 'for' " << endl;
+		m_isHaveWrong = true;
 	}
 	if (WORDDATA.m_name == "(")
 	{
@@ -291,6 +302,7 @@ void CGrammarManager::For_Stat()
 	{
 		//报错
 		cout << "Line" << PREWORDDATA.m_indexLine << "： 在 for 后 缺少 '('" << endl;
+		m_isHaveWrong = true;
 	}
 	Expression();
 
@@ -304,6 +316,7 @@ void CGrammarManager::For_Stat()
 	{
 		//报错
 		cout << "Line" << PREWORDDATA.m_indexLine << "： 在 " << PREWORDDATA.m_name << " 后缺少';'" << endl;
+		m_isHaveWrong = true;
 	}
 
 	//中间代码生成
@@ -323,6 +336,7 @@ void CGrammarManager::For_Stat()
 	{
 		//报错
 		cout << "Line" << PREWORDDATA.m_indexLine << "： 错误引用了符号" << PREWORDDATA.m_name << endl;
+		m_isHaveWrong = true;
 	}
 
 	//中间代码生成
@@ -342,6 +356,7 @@ void CGrammarManager::For_Stat()
 	{
 		//报错
 		cout << "Line" << PREWORDDATA.m_indexLine << "： " << PREWORDDATA.m_name << " 后缺失')'" << endl;
+		m_isHaveWrong = true;
 	}
 
 	//中间代码生成
@@ -365,6 +380,7 @@ void CGrammarManager::Write_Stat()
 	{
 		//报错
 		cout << "Line" << PREWORDDATA.m_indexLine << "： 缺失 'write' " << endl;
+		m_isHaveWrong = true;
 	}
 	Expression();
 	//中间代码生成
@@ -378,6 +394,7 @@ void CGrammarManager::Write_Stat()
 	{
 		//报错
 		cout << "Line" << PREWORDDATA.m_indexLine << "： " << PREWORDDATA.m_name << " 后缺失';'" << endl;
+		m_isHaveWrong = true;
 	}
 }
 
@@ -392,6 +409,7 @@ void CGrammarManager::Read_Stat()
 	{
 		//报错
 		cout << "Line" << PREWORDDATA.m_indexLine << "： 缺失 'read'" << endl;
+		m_isHaveWrong = true;
 	}
 	string stepword;
 	if (WORDDATA.m_type == "ID")
@@ -401,7 +419,10 @@ void CGrammarManager::Read_Stat()
 		if (!m_isHaveWrong)
 		{
 			if (!m_PropertyTable.IsFindSymbol(WORDDATA.m_name))
+			{
 				cout << "Line" << WORDDATA.m_indexLine << "： 变量 " << WORDDATA.m_name << " 未定义" << endl;
+				isWrong = true;
+			}
 			else
 				m_PropertyTable.SetData(WORDDATA.m_name, 0);
 		}
@@ -411,6 +432,7 @@ void CGrammarManager::Read_Stat()
 	{
 		//报错
 		cout << "Line" << PREWORDDATA.m_indexLine << "： read 后缺失标识符" << endl;
+		m_isHaveWrong = true;
 	}
 
 	//中间代码生成
@@ -426,6 +448,7 @@ void CGrammarManager::Read_Stat()
 	{
 		//报错
 		cout << "Line" << PREWORDDATA.m_indexLine << "： " << PREWORDDATA.m_name << " 后缺失 ';'" << endl;
+		m_isHaveWrong = true;
 	}
 }
 
@@ -441,6 +464,7 @@ void CGrammarManager::Compound_Stat()
 	{
 		//报错
 		cout << "Line" << PREWORDDATA.m_indexLine << "： 缺失'{'" << endl;
+		m_isHaveWrong = true;
 	}
 	Statement_List();
 	if (WORDDATA.m_name == "}")
@@ -451,6 +475,7 @@ void CGrammarManager::Compound_Stat()
 	{
 		//报错
 		cout << "Line" << PREWORDDATA.m_indexLine << "： " << PREWORDDATA.m_name << " 后缺失'}'" << endl;
+		m_isHaveWrong = true;
 	}
 }
 
@@ -473,6 +498,7 @@ void CGrammarManager::Expression_Stat()
 		{
 			//报错
 			cout << "Line" << PREWORDDATA.m_indexLine << "： " << PREWORDDATA.m_name << " 后缺失';'" << endl;
+			m_isHaveWrong = true;
 		}
 	}
 	else
@@ -517,6 +543,7 @@ void CGrammarManager::Expression()
 		{
 			//报错
 			cout << "Line" << PREWORDDATA.m_indexLine << "： " << PREWORDDATA.m_name << " 后缺失 '='" << endl;
+			m_isHaveWrong = true;
 		}
 		Bool_Expr();
 
@@ -534,6 +561,7 @@ void CGrammarManager::Expression()
 	{
 		//报错
 		cout << "Line" << PREWORDDATA.m_indexLine << "： 错误引用了符号" << PREWORDDATA.m_name << endl;
+		m_isHaveWrong = true;
 	}
 }
 
@@ -628,6 +656,7 @@ void CGrammarManager::Factor()
 		{
 			//报错
 			cout << "Line" << PREWORDDATA.m_indexLine << "： " << PREWORDDATA.m_name << " 后缺失')'" << endl;
+			m_isHaveWrong = true;
 		}
 	}
 	else {
@@ -660,12 +689,13 @@ void CGrammarManager::Factor()
 		{
 			//报错
 			cout << "Line" << PREWORDDATA.m_indexLine << "： 错误引用了符号" << PREWORDDATA.m_name << endl;
+			m_isHaveWrong = true;
 		}
 
 	}
 }
 
-
+//将中间代码写入文本
 void CGrammarManager::OutMiddleCode()
 {
 	CFileDatabyTxt m_file;
