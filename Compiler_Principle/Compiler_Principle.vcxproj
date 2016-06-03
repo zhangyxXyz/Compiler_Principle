@@ -158,6 +158,7 @@
     <ClInclude Include="GrammarManager.h" />
     <ClInclude Include="InformationManager.h" />
     <ClInclude Include="LL_1_Table.h" />
+    <ClInclude Include="MiddleCodeFactory.h" />
     <ClInclude Include="NounMapSet.h" />
     <ClInclude Include="ReceivingData.h" />
     <ClInclude Include="StateManger.h" />
@@ -177,6 +178,7 @@
     <ClCompile Include="GrammarManager.cpp" />
     <ClCompile Include="InformationManager.cpp" />
     <ClCompile Include="LL_1_Table.cpp" />
+    <ClCompile Include="MiddleCodeFactory.cpp" />
     <ClCompile Include="NounMapSet.cpp" />
     <ClCompile Include="ReceivingData.cpp" />
     <ClCompile Include="StateManger.cpp" />

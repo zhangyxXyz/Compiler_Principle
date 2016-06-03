@@ -24,9 +24,8 @@ bool CGrammarManager::Process()
 	isWrong = false;
 	m_nowIndex = 0;					//初始化处理的操作符号的位置
 	m_isHaveWrong = false;
-	m_LableNum = 1;
 	Program();
-	OutMiddleCode();
+	m_MiddleCodeFactory.OutMiddleCode();
 	return isWrong;
 }
 
@@ -88,7 +87,7 @@ void CGrammarManager::Declaration_Stat()
 		//语义动作：查符号表判断是否重定义，并执行插入操作
 		if (!m_isHaveWrong)
 		{
-			if (!m_PropertyTable.Insert(WORDDATA.m_name))
+			if (!m_MiddleCodeFactory.m_PropertyTable.Insert(WORDDATA.m_name))
 			{
 				cout << "Line" << WORDDATA.m_indexLine << "： 变量 " << WORDDATA.m_name << " 重定义" << endl;
 				isWrong = true;
@@ -211,22 +210,22 @@ void CGrammarManager::If_Stat()
 	}
 
 	//中间代码生成@BRF
-	string label1 = newLabel();
-	string label2 = newLabel();
-	Brf(label1);
+	string label1 = m_MiddleCodeFactory.newLabel();
+	string label2 = m_MiddleCodeFactory.newLabel();
+	m_MiddleCodeFactory.Brf(label1);
 
 	Statement();
 
 	//中间代码生成@BR
-	Br(label2);
-	Setlabel(label1);
+	m_MiddleCodeFactory.Br(label2);
+	m_MiddleCodeFactory.Setlabel(label1);
 
 	if (WORDDATA.m_name == "else")
 	{
 		GetNextSymbol();
 		Statement();
 	}
-	Setlabel(label2);
+	m_MiddleCodeFactory.Setlabel(label2);
 }
 
 
@@ -244,9 +243,9 @@ void CGrammarManager::While_Stat()
 	}
 
 	//中间代码生成@LABLE
-	string label1 = newLabel();
-	string label2 = newLabel();
-	Setlabel(label1);
+	string label1 = m_MiddleCodeFactory.newLabel();
+	string label2 = m_MiddleCodeFactory.newLabel();
+	m_MiddleCodeFactory.Setlabel(label1);
 
 	if (WORDDATA.m_name == "(")
 	{
@@ -271,19 +270,19 @@ void CGrammarManager::While_Stat()
 	}
 
 	//中间代码生成
-	Brf(label2);
+	m_MiddleCodeFactory.Brf(label2);
 	Statement();
-	Br(label1);
-	Setlabel(label2);
+	m_MiddleCodeFactory.Br(label1);
+	m_MiddleCodeFactory.Setlabel(label2);
 }
 
 
 void CGrammarManager::For_Stat()
 {
-	string label1 = newLabel();
-	string label2 = newLabel();
-	string label3 = newLabel();
-	string label4 = newLabel();
+	string label1 = m_MiddleCodeFactory.newLabel();
+	string label2 = m_MiddleCodeFactory.newLabel();
+	string label3 = m_MiddleCodeFactory.newLabel();
+	string label4 = m_MiddleCodeFactory.newLabel();
 	if (WORDDATA.m_name == "for")
 	{
 		GetNextSymbol();
@@ -307,7 +306,7 @@ void CGrammarManager::For_Stat()
 	Expression();
 
 	//中间代码生成
-	Pop();
+	m_MiddleCodeFactory.Pop();
 	if (WORDDATA.m_name == ";")
 	{
 		GetNextSymbol();
@@ -320,13 +319,13 @@ void CGrammarManager::For_Stat()
 	}
 
 	//中间代码生成
-	Setlabel(label1);
+	m_MiddleCodeFactory.Setlabel(label1);
 
 	Expression();
 
 	//中间代码生成
-	Brf(label2);
-	Br(label3);
+	m_MiddleCodeFactory.Brf(label2);
+	m_MiddleCodeFactory.Br(label3);
 	if (WORDDATA.m_name == ";")
 	{
 		GetNextSymbol();
@@ -340,13 +339,13 @@ void CGrammarManager::For_Stat()
 	}
 
 	//中间代码生成
-	Setlabel(label4);
+	m_MiddleCodeFactory.Setlabel(label4);
 
 	Expression();
 
 	//中间代码生成
-	Pop();
-	Br(label1);
+	m_MiddleCodeFactory.Pop();
+	m_MiddleCodeFactory.Br(label1);
 
 	if (WORDDATA.m_name == ")")
 	{
@@ -360,13 +359,13 @@ void CGrammarManager::For_Stat()
 	}
 
 	//中间代码生成
-	Setlabel(label3);
+	m_MiddleCodeFactory.Setlabel(label3);
 
 	Statement();
 
 	//中间代码生成
-	Br(label4);
-	Setlabel(label2);
+	m_MiddleCodeFactory.Br(label4);
+	m_MiddleCodeFactory.Setlabel(label2);
 }
 
 
@@ -384,7 +383,7 @@ void CGrammarManager::Write_Stat()
 	}
 	Expression();
 	//中间代码生成
-	Out();
+	m_MiddleCodeFactory.Out();
 
 	if (WORDDATA.m_name == ";")
 	{
@@ -418,13 +417,15 @@ void CGrammarManager::Read_Stat()
 		//语义动作： 查符号表看标识符是否定义,给符号赋值
 		if (!m_isHaveWrong)
 		{
-			if (!m_PropertyTable.IsFindSymbol(WORDDATA.m_name))
+			if (!m_MiddleCodeFactory.m_PropertyTable.IsFindSymbol(WORDDATA.m_name))
 			{
 				cout << "Line" << WORDDATA.m_indexLine << "： 变量 " << WORDDATA.m_name << " 未定义" << endl;
+				//防止多次报错
+				//m_MiddleCodeFactory.m_PropertyTable.Insert(WORDDATA.m_name);
 				isWrong = true;
 			}
 			else
-				m_PropertyTable.SetData(WORDDATA.m_name, 0);
+				m_MiddleCodeFactory.m_PropertyTable.SetData(WORDDATA.m_name, 0);
 		}
 		GetNextSymbol();
 	}
@@ -436,9 +437,9 @@ void CGrammarManager::Read_Stat()
 	}
 
 	//中间代码生成
-	In();
-	Sto(m_PropertyTable.GetAddByNmme(stepword));
-	Pop();
+	m_MiddleCodeFactory.In();
+	m_MiddleCodeFactory.Sto(m_MiddleCodeFactory.m_PropertyTable.GetAddByNmme(stepword));
+	m_MiddleCodeFactory.Pop();
 
 	if (WORDDATA.m_name == ";")
 	{
@@ -488,7 +489,7 @@ void CGrammarManager::Expression_Stat()
 		Expression();
 
 		//中间代码生成@POP
-		Pop();
+		m_MiddleCodeFactory.Pop();
 
 		if (WORDDATA.m_name == ";")
 		{
@@ -518,10 +519,11 @@ void CGrammarManager::Expression()
 		//语义动作： 检查符号表判断是否含有该ID
 		if (!m_isHaveWrong)
 		{
-			if (!m_PropertyTable.IsFindSymbol(WORDDATA.m_name))
+			if (!m_MiddleCodeFactory.m_PropertyTable.IsFindSymbol(WORDDATA.m_name))
 			{
 				cout << "Line" << WORDDATA.m_indexLine << "： 变量 " << WORDDATA.m_name << " 未定义" << endl;
-				//m_PropertyTable.Insert(WORDDATA.m_name);
+				//防止多次报错
+				//m_MiddleCodeFactory.m_PropertyTable.Insert(WORDDATA.m_name);
 				isWrong = true;
 			}
 			
@@ -530,7 +532,7 @@ void CGrammarManager::Expression()
 
 		//中间代码生成@LOOK
 		stepWord = WORDDATA.m_name;
-		address = m_PropertyTable.GetAddByNmme(stepWord);
+		address = m_MiddleCodeFactory.m_PropertyTable.GetAddByNmme(stepWord);
 
 		GetNextSymbol();
 
@@ -548,10 +550,10 @@ void CGrammarManager::Expression()
 		Bool_Expr();
 
 		//语义动作：给变量赋值
-		m_PropertyTable.SetData(stepWord, 0);
+		m_MiddleCodeFactory.m_PropertyTable.SetData(stepWord, 0);
 
 		//中间代码生成
-		Sto(address);
+		m_MiddleCodeFactory.Sto(address);
 	}
 	else if (WORDDATA.m_name == "(" || WORDDATA.m_type == "NUM" || WORDDATA.m_type == "ID")
 	{
@@ -582,12 +584,12 @@ void CGrammarManager::Oper_Additive_Expr()
 		Additive_Expr();
 
 		//中间代码生成
-		if (stepword == "<") Les();
-		else if (stepword == ">") Gt();
-		else if (stepword == ">=") Ge();
-		else if (stepword == "<=") Le();
-		else if (stepword == "==") Eq();
-		else if (stepword == "!=") Noteq();
+		if (stepword == "<") m_MiddleCodeFactory.Les();
+		else if (stepword == ">") m_MiddleCodeFactory.Gt();
+		else if (stepword == ">=") m_MiddleCodeFactory.Ge();
+		else if (stepword == "<=") m_MiddleCodeFactory.Le();
+		else if (stepword == "==") m_MiddleCodeFactory.Eq();
+		else if (stepword == "!=") m_MiddleCodeFactory.Noteq();
 	}
 }
 
@@ -607,8 +609,8 @@ void CGrammarManager::Oper_Term()
 		GetNextSymbol();
 		Term();
 		//中间代码生成
-		if (stepword == "+") Add();
-		else if (stepword == "-") Sub();
+		if (stepword == "+") m_MiddleCodeFactory.Add();
+		else if (stepword == "-") m_MiddleCodeFactory.Sub();
 		Oper_Term();
 	}
 }
@@ -631,8 +633,8 @@ void CGrammarManager::Oper_Factor()
 		Factor();
 
 		//中间代码生成
-		if (stepword == "*") Mult();
-		else if (stepword == "/") Div();
+		if (stepword == "*") m_MiddleCodeFactory.Mult();
+		else if (stepword == "/") m_MiddleCodeFactory.Div();
 
 		Oper_Factor();
 	}
@@ -665,23 +667,26 @@ void CGrammarManager::Factor()
 			//语义动作： 检查是否赋初值
 			if (!m_isHaveWrong && WORDDATA.m_type == "ID")
 			{
-				if (!m_PropertyTable.IsFindSymbol(WORDDATA.m_name))
+				if (!m_MiddleCodeFactory.m_PropertyTable.IsFindSymbol(WORDDATA.m_name))
 				{
 					cout << "Line" << WORDDATA.m_indexLine << "： 变量 " << WORDDATA.m_name << " 未定义" << endl;
-					//m_PropertyTable.Insert(WORDDATA.m_name);
+					//防止多次报错
+					//m_MiddleCodeFactory.m_PropertyTable.Insert(WORDDATA.m_name);
 					isWrong = true;
 				}
-				else if (!m_PropertyTable.IsHaveData(WORDDATA.m_name))
+				else if (!m_MiddleCodeFactory.m_PropertyTable.IsHaveData(WORDDATA.m_name))
 				{
 					cout << "Line" << WORDDATA.m_indexLine << "： 变量 " << WORDDATA.m_name << " 未初始化" << endl;
-					m_PropertyTable.SetData(WORDDATA.m_name, 0);
+					m_MiddleCodeFactory.m_PropertyTable.SetData(WORDDATA.m_name, 0);
 					isWrong = true;
 				}
 			}
 
 			//中间代码生成
-			if (WORDDATA.m_type == "ID") Load(m_PropertyTable.GetAddByNmme(WORDDATA.m_name));
-			else if (WORDDATA.m_type == "NUM") Loadi(StringToInt(WORDDATA.m_name));
+			if (WORDDATA.m_type == "ID") 
+				m_MiddleCodeFactory.Load(m_MiddleCodeFactory.m_PropertyTable.GetAddByNmme(WORDDATA.m_name));
+			else if (WORDDATA.m_type == "NUM") 
+				m_MiddleCodeFactory.Loadi(StringToInt(WORDDATA.m_name));
 			GetNextSymbol();
 			return;
 		}
@@ -693,108 +698,4 @@ void CGrammarManager::Factor()
 		}
 
 	}
-}
-
-//将中间代码写入文本
-void CGrammarManager::OutMiddleCode()
-{
-	CFileDatabyTxt m_file;
-	m_file.FileOpen("./message/middleCode.txt");
-	for (auto iter : m_middleCode)
-	{
-		if (iter.find("LABEL") == 0)
-			m_file.FileWrite(iter + "\n");
-		else
-			m_file.FileWrite("      " + iter + "\n");
-	}
-	m_file.FileClose();
-}
-
-
-
-//具体的属性文法及动作
-
-string CGrammarManager::newLabel()
-{
-	return string("LABEL") + m_LableNum++;
-}
-void CGrammarManager::Pop()
-{
-	m_middleCode.push_back(string("POP"));
-}
-int CGrammarManager::Look(string word)
-{
-	return m_PropertyTable.GetAddByNmme(word);
-}
-void CGrammarManager::Sto(int address)
-{
-	m_middleCode.push_back(string("STO ") + address);
-}
-void CGrammarManager::Gt()
-{
-	m_middleCode.push_back(string("GT"));
-}
-void CGrammarManager::Les()
-{
-	m_middleCode.push_back(string("LES"));
-}
-void CGrammarManager::Ge()
-{
-	m_middleCode.push_back(string("GE"));
-}
-void CGrammarManager::Le()
-{
-	m_middleCode.push_back(string("LE"));
-}
-void CGrammarManager::Eq()
-{
-	m_middleCode.push_back(string("EQ"));
-}
-void CGrammarManager::Noteq()
-{
-	m_middleCode.push_back(string("NOTEQ"));
-}
-void CGrammarManager::Add()
-{
-	m_middleCode.push_back(string("ADD"));
-}
-void CGrammarManager::Sub()
-{
-	m_middleCode.push_back(string("SUB"));
-}
-void CGrammarManager::Mult()
-{
-	m_middleCode.push_back(string("MULT"));
-}
-void CGrammarManager::Div()
-{
-	m_middleCode.push_back(string("DIV"));
-}
-void CGrammarManager::Load(int address)
-{
-	m_middleCode.push_back(string("LOAD ") + address);
-}
-void CGrammarManager::Loadi(int num)
-{
-	m_middleCode.push_back(string("LOADI ") + num);
-}
-void CGrammarManager::Brf(string label)
-{
-	m_middleCode.push_back(string("BRF ") + label);
-}
-void CGrammarManager::Br(string label)
-{
-	m_middleCode.push_back(string("BR ") + label);
-}
-void CGrammarManager::Setlabel(string label)
-{
-	m_middleCode.push_back(label + ":");
-}
-void CGrammarManager::In()
-{
-	m_middleCode.push_back(string("IN"));
-}
-void CGrammarManager::Out()
-{
-	m_middleCode.push_back(string("OUT"));
 }

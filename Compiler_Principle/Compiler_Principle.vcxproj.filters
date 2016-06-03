@@ -99,6 +99,9 @@
     <ClInclude Include="AbstractMachine.h">
       <Filter>头文件\Test语言抽象机</Filter>
     </ClInclude>
+    <ClInclude Include="MiddleCodeFactory.h">
+      <Filter>头文件\语法&amp;语义</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -148,6 +151,9 @@
     </ClCompile>
     <ClCompile Include="AbstractMachine.cpp">
       <Filter>源文件\Test语言抽象机</Filter>
+    </ClCompile>
+    <ClCompile Include="MiddleCodeFactory.cpp">
+      <Filter>源文件\语法&amp;语义</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
